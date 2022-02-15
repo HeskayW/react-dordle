@@ -27,8 +27,10 @@ import {
 } from './constants/settings'
 import {
   isWordInWordList,
-  isWinningWord,
-  solution,
+  isWinningWordLeft,
+  isWinningWordRight,
+  solution1,
+  solution2,
   findFirstUnusedReveal,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
@@ -48,6 +50,10 @@ function App() {
 
   const [currentGuess, setCurrentGuess] = useState('')
   const [isGameWon, setIsGameWon] = useState(false)
+
+  const [isLeftWon, setIsLeftWon] = useState(false)
+  const [isRightWon, setIsRightWon] = useState(false)
+
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -70,10 +76,10 @@ function App() {
   const [isRevealing, setIsRevealing] = useState(false)
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
-    if (loaded?.solution !== solution) {
+    if (loaded?.solution1 !== solution1) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
+    const gameWasWon = loaded.guesses.includes(solution1)
     if (gameWasWon) {
       setIsGameWon(true)
     }
@@ -132,7 +138,7 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
+    saveGameStateToLocalStorage({ guesses, solution1: solution1 , solution2: solution2})
   }, [guesses])
 
   useEffect(() => {
@@ -212,7 +218,15 @@ function App() {
       setIsRevealing(false)
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
 
-    const winningWord = isWinningWord(currentGuess)
+
+    if (!isLeftWon && isWinningWordLeft(currentGuess)){
+      setIsLeftWon(true)
+    }
+    if (!isRightWon && isWinningWordRight(currentGuess)){
+      setIsRightWon(true)
+    }
+    //const winningWordLeft = isWinningWordLeft(currentGuess)
+    //const winningWordRight = isWinningWordRight(currentGuess)
 
     if (
       currentGuess.length === MAX_WORD_LENGTH &&
@@ -222,7 +236,7 @@ function App() {
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
 
-      if (winningWord) {
+      if (isLeftWon && isRightWon) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
         return setIsGameWon(true)
       }
@@ -258,6 +272,8 @@ function App() {
         currentGuess={currentGuess}
         isRevealing={isRevealing}
         currentRowClassName={currentRowClass}
+        currentIsLeftWon={isLeftWon}
+        currentIsRightWon={isRightWon}
       />
       <Keyboard
         onChar={onChar}
@@ -302,7 +318,7 @@ function App() {
       />
       <Alert message={missingLetterMessage} isOpen={isMissingPreviousLetters} />
       <Alert
-        message={CORRECT_WORD_MESSAGE(solution)}
+        message={CORRECT_WORD_MESSAGE(solution1)}
         isOpen={isGameLost && !isRevealing}
       />
       <Alert
