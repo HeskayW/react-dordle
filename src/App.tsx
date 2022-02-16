@@ -74,20 +74,46 @@ function App() {
   )
   const [successAlert, setSuccessAlert] = useState('')
   const [isRevealing, setIsRevealing] = useState(false)
+  //------------------------------------------------------------------- LOADING GUESSES
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution1 !== solution1) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution1)
-    if (gameWasWon) {
+    const leftWasWon = loaded.guesses.includes(solution1)
+    const rightWasWon = loaded.guesses.includes(solution2)
+    if (leftWasWon){
+      setIsLeftWon(true)
+    }
+    if (rightWasWon){
+      setIsRightWon(true)
+    }
+    if (leftWasWon && rightWasWon) {
       setIsGameWon(true)
     }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
+    if (loaded.guesses.length === MAX_CHALLENGES && (!leftWasWon || !rightWasWon)) {
       setIsGameLost(true)
     }
     return loaded.guesses
   })
+  //-------------------------------------------------------------------LOADING PRINT ARRAYS
+  const [printOnLeft, setPrintOnLeft] = useState<boolean[]>(() => {
+    const loaded = loadGameStateFromLocalStorage()
+    if (loaded?.solution1 !== solution1) {
+      return [true]
+    }
+    return loaded.printOnLeft
+    })
+
+  const [printOnRight, setPrintOnRight] = useState<boolean[]>(() => {
+    const loaded = loadGameStateFromLocalStorage()
+    if (loaded?.solution1 !== solution1) {
+      return [true]
+    }
+    return loaded.printOnRight
+  })
+
+  //-------------------------------------------------------------------
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -138,8 +164,8 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution1: solution1 , solution2: solution2})
-  }, [guesses])
+    saveGameStateToLocalStorage({ guesses, solution1: solution1 , solution2: solution2 , printOnLeft: printOnLeft, printOnRight: printOnRight})
+  }, [guesses,printOnLeft,printOnRight])
 
   useEffect(() => {
     if (isGameWon) {
@@ -219,12 +245,7 @@ function App() {
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
 
 
-    if (!isLeftWon && isWinningWordLeft(currentGuess)){
-      setIsLeftWon(true)
-    }
-    if (!isRightWon && isWinningWordRight(currentGuess)){
-      setIsRightWon(true)
-    }
+
     //const winningWordLeft = isWinningWordLeft(currentGuess)
     //const winningWordRight = isWinningWordRight(currentGuess)
 
@@ -235,6 +256,40 @@ function App() {
     ) {
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
+
+      //------------------------------------------------------------   
+      console.log('ENTER')
+
+      if (!isLeftWon && isWinningWordLeft(currentGuess)){
+        setIsLeftWon(true)
+        setPrintOnLeft([...printOnLeft,false])
+      } else if (isLeftWon){
+        setPrintOnLeft([...printOnLeft,false])
+      } else {
+        setPrintOnLeft([...printOnLeft,true])
+      }
+
+      if (!isRightWon && isWinningWordRight(currentGuess)){
+        console.log('1')
+        setIsRightWon(true)
+        console.log('isRightWon despues de 1',isRightWon)
+        setPrintOnRight([...printOnRight,false])
+      }else if (isRightWon){
+        console.log('2')
+        setPrintOnRight([...printOnRight,false])
+      }else{
+        console.log('3')
+        setPrintOnRight([...printOnRight,true])
+      }
+
+      console.log('chequeando isWinningRightWord', isWinningWordRight(currentGuess))
+      console.log('isLeftWon',isLeftWon)
+      console.log('isRightWon',isRightWon)
+      console.log('currentGuess',currentGuess)
+      
+      console.log('printOnleft',printOnLeft)
+      console.log('printOnRight',printOnRight)
+      //------------------------------------------------------------
 
       if (isLeftWon && isRightWon) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
@@ -272,8 +327,8 @@ function App() {
         currentGuess={currentGuess}
         isRevealing={isRevealing}
         currentRowClassName={currentRowClass}
-        currentIsLeftWon={isLeftWon}
-        currentIsRightWon={isRightWon}
+        printOnLeft={printOnLeft}
+        printOnRight={printOnRight}
       />
       <Keyboard
         onChar={onChar}

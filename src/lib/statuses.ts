@@ -49,7 +49,7 @@ export const getStatuses = (
       }
     })
   })
-  console.log(charObj)
+  //console.log(charObj)
   return charObj
 }
 
