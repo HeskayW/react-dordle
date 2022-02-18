@@ -22,7 +22,7 @@ export const getStatuses = (
       if (!solution1.includes(letter) && letter === solution2[i]) {
         return (charObj[letter] = 'ac')
       }
-      if (!solution1.includes(letter) && charObj[letter] !== 'ac') {
+      if (!solution1.includes(letter)) {
         return (charObj[letter] = 'ap')
       }
 
@@ -33,7 +33,7 @@ export const getStatuses = (
       if (letter === solution1[i] && letter === solution2[i]) {
         return (charObj[letter] = 'cc')
       }
-      if (letter === solution1[i] && charObj[letter] !== 'cc') {
+      if (letter === solution1[i]) {
         return (charObj[letter] = 'cp')
       }
 
@@ -41,7 +41,7 @@ export const getStatuses = (
       if (!solution2.includes(letter)) {
         return (charObj[letter] = 'pa')
       }
-      if (letter === solution2[1]){
+      if (letter === solution2[i]){
         return (charObj[letter] = 'pc')
       }
       if (charObj[letter] !== 'pc'){
@@ -49,7 +49,6 @@ export const getStatuses = (
       }
     })
   })
-  //console.log(charObj)
   return charObj
 }
 
@@ -65,7 +64,6 @@ export const getGuessStatuses = (guess: string, solution: number): CharStatus[] 
   })();
 
 
-  //const splitSolution = solution1.split('')
   const splitGuess = guess.split('')
 
   const solutionCharsTaken = splitSolution.map((_) => false)

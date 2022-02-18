@@ -26,22 +26,11 @@ export const Grid = ({
 
 }: Props) => {
 
-  // if (!stopPrintLeft){
-  //   guessesLeft = guesses
-  // }else{
-  //   guessesLeft.push('')
-  // }
-  // if (!stopPrintRight){
-  //   guessesRight = guesses
-  // }else{
-  //   guessesRight.push('')
-  // }
+
   var currentPrintOnLeft = printOnLeft[printOnLeft.length-1]
   var currentPrintOnRight= printOnRight[printOnRight.length-1]
 
-  console.log('current print on right en grid',currentPrintOnRight)
-  console.log('print on Right en grid', printOnRight)
-  console.log('guesses ahora en grid', guesses)
+
   const empties =
     guesses.length < MAX_CHALLENGES - 1
       ? Array.from(Array(MAX_CHALLENGES - 1 - guesses.length))

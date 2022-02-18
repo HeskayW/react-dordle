@@ -89,7 +89,6 @@ export const CompletedRow = ({ guess, isRevealing, printOnLeft, printOnRight}: P
     )
   }
 
-  console.log('ganaste? en completedRow')
   return(
     <div className={"flex justify-center mb-1"}>
       {emptyCells.map((_, i) => (

@@ -246,8 +246,6 @@ function App() {
 
 
 
-    //const winningWordLeft = isWinningWordLeft(currentGuess)
-    //const winningWordRight = isWinningWordRight(currentGuess)
 
     if (
       currentGuess.length === MAX_WORD_LENGTH &&
@@ -258,7 +256,6 @@ function App() {
       setCurrentGuess('')
 
       //------------------------------------------------------------   
-      console.log('ENTER')
 
       if (!isLeftWon && isWinningWordLeft(currentGuess)){
         setIsLeftWon(true)
@@ -270,25 +267,14 @@ function App() {
       }
 
       if (!isRightWon && isWinningWordRight(currentGuess)){
-        console.log('1')
         setIsRightWon(true)
-        console.log('isRightWon despues de 1',isRightWon)
         setPrintOnRight([...printOnRight,false])
       }else if (isRightWon){
-        console.log('2')
         setPrintOnRight([...printOnRight,false])
       }else{
-        console.log('3')
         setPrintOnRight([...printOnRight,true])
       }
 
-      console.log('chequeando isWinningRightWord', isWinningWordRight(currentGuess))
-      console.log('isLeftWon',isLeftWon)
-      console.log('isRightWon',isRightWon)
-      console.log('currentGuess',currentGuess)
-      
-      console.log('printOnleft',printOnLeft)
-      console.log('printOnRight',printOnRight)
       //------------------------------------------------------------
 
       if (isLeftWon && isRightWon) {

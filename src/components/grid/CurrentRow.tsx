@@ -19,7 +19,6 @@ export const CurrentRow = ({ guess, className, printOnLeft, printOnRight}: Props
 
   if(printOnLeft && printOnRight)
   {
-    console.log('1 en current row')
     return (
       <div className={classes}>
         {splitGuess.map((letter, i) => (
@@ -41,7 +40,6 @@ export const CurrentRow = ({ guess, className, printOnLeft, printOnRight}: Props
 
   if(printOnLeft && !printOnRight)
   {
-    console.log('2 en current row')
     return (
       <div className={classes}>
         {splitGuess.map((letter, i) => (
@@ -60,7 +58,6 @@ export const CurrentRow = ({ guess, className, printOnLeft, printOnRight}: Props
   
   if(!printOnLeft && printOnRight)
   {
-    console.log('3 en current row')
     return (
       <div className={classes}>
         {emptyRow.map((_, i) => (
@@ -77,7 +74,6 @@ export const CurrentRow = ({ guess, className, printOnLeft, printOnRight}: Props
       )
   }
 
-  console.log('ganaste? en currentRow')
   return(
     <div className={classes}>
       {emptyRow.map((_, i) => (
