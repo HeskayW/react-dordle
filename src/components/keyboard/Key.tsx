@@ -25,7 +25,7 @@ export const Key = ({
   const isHighContrast = getStoredIsHighContrastMode()
 
   const classes = classnames(
-    'flex items-center justify-center rounded mx-0.5 text-xs font-bold cursor-pointer select-none dark:text-white border-transparent',
+    'flex items-center justify-center rounded mx-0.5 text-lg font-bold cursor-pointer select-none dark:text-white border-transparent',
     {
       'transition ease-in-out': isRevealing,
       'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':
@@ -60,8 +60,8 @@ export const Key = ({
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
     width: `${width}px`,
     height: '58px',
-    borderLeftWidth: `${width/2}px`,
-    borderRightWidth: `${width/2}px`,
+    borderLeftWidth: `${width*0.5}px`,
+    borderRightWidth: `${width*0.5}px`,
   }
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

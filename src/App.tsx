@@ -53,6 +53,7 @@ function App() {
 
   const [isLeftWon, setIsLeftWon] = useState(false)
   const [isRightWon, setIsRightWon] = useState(false)
+  const [isLimitReached, setIsLimitReached] = useState(false)
 
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
@@ -168,6 +169,20 @@ function App() {
   }, [guesses,printOnLeft,printOnRight])
 
   useEffect(() => {
+    if(isLeftWon && isRightWon){
+      setStats(addStatsForCompletedGame(stats, guesses.length))
+      setIsGameWon(true)      
+    }
+  }, [isLeftWon, isRightWon]);
+
+  useEffect(() => {
+    if(isLimitReached && !isGameWon){      
+      setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+      setIsGameLost(true)      
+    }
+  }, [isLimitReached]);
+  
+  useEffect(() => {
     if (isGameWon) {
       setTimeout(() => {
         setSuccessAlert(
@@ -274,17 +289,16 @@ function App() {
       }else{
         setPrintOnRight([...printOnRight,true])
       }
-
       //------------------------------------------------------------
 
-      if (isLeftWon && isRightWon) {
-        setStats(addStatsForCompletedGame(stats, guesses.length))
-        return setIsGameWon(true)
-      }
+      // if (isLeftWon && isRightWon) {
+      //   setStats(addStatsForCompletedGame(stats, guesses.length))
+      //   return setIsGameWon(true)
+      // }
 
-      if (guesses.length === MAX_CHALLENGES - 1) {
-        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
-        setIsGameLost(true)
+      if (guesses.length === MAX_CHALLENGES - 1 && !isGameWon) {
+        setIsLimitReached(true)
+
       }
     }
   }
