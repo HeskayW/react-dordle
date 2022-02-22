@@ -1,3 +1,12 @@
+# React Dordle
+
+This is a fork of cwackerfuss/react-wordle adapted as a clone of Dordle by Guilherme S. Töws - (https://zaratustra.itch.io/dordle) 
+Intented to be a Spanish Dordle
+
+I wanted to made this project because I really like Dordle and I wished my non-English speaking relatives and friends could play it.
+
+
+# Original README
 # React Wordle
 
 This is a clone project of the popular word guessing game we all know and love. Made using React, Typescript, and Tailwind.
