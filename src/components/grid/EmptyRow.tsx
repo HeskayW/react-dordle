@@ -9,6 +9,10 @@ export const EmptyRow = () => {
       {emptyCells.map((_, i) => (
         <Cell key={i} />
       ))}
+      &nbsp;
+      {emptyCells.map((_, i) => (
+        <Cell key={i} />
+      ))}
     </div>
   )
 }

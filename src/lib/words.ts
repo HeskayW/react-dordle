@@ -10,8 +10,11 @@ export const isWordInWordList = (word: string) => {
   )
 }
 
-export const isWinningWord = (word: string) => {
-  return solution === word
+export const isWinningWordLeft= (word: string) => {
+  return solution1 === word
+}
+export const isWinningWordRight = (word: string) => {
+  return solution2 === word
 }
 
 // build a set of previously revealed letters - present and correct
@@ -19,7 +22,7 @@ export const isWinningWord = (word: string) => {
 export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
   const knownLetterSet = new Set<string>()
   for (const guess of guesses) {
-    const statuses = getGuessStatuses(guess)
+    const statuses = getGuessStatuses(guess,1)
 
     for (let i = 0; i < guess.length; i++) {
       if (statuses[i] === 'correct' || statuses[i] === 'present') {
@@ -42,17 +45,21 @@ export const findFirstUnusedReveal = (word: string, guesses: string[]) => {
 
 export const getWordOfDay = () => {
   // January 1, 2022 Game Epoch
-  const epochMs = new Date('January 1, 2022 00:00:00').valueOf()
+  const epochMs1 = new Date('January 1, 2022 00:00:00').valueOf()
+  const epochMs2 = new Date('June 1, 2020 00:00:00').valueOf()
   const now = Date.now()
   const msInDay = 86400000
-  const index = Math.floor((now - epochMs) / msInDay)
-  const nextday = (index + 1) * msInDay + epochMs
+  const index1 = Math.floor((now - epochMs1) / msInDay)
+  const index2 = Math.floor((now - epochMs2) / msInDay)
+  const nextday = (index1 + 1) * msInDay + epochMs1
 
   return {
-    solution: WORDS[index % WORDS.length].toUpperCase(),
-    solutionIndex: index,
+    solution1: WORDS[index1 % WORDS.length].toUpperCase(),
+    solution2: WORDS[index2 % WORDS.length].toUpperCase(),
+    solutionIndex1: index1,
+    solutionIndex2: index2,
     tomorrow: nextday,
   }
 }
 
-export const { solution, solutionIndex, tomorrow } = getWordOfDay()
+export const { solution1: solution1, solutionIndex1: solutionIndex1, solution2: solution2, solutionIndex2: solutionIndex2, tomorrow } = getWordOfDay()

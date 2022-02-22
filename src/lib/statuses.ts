@@ -1,7 +1,11 @@
-import { solution } from './words'
+import { solution1 } from './words'
+import { solution2 } from './words'
 
-export type CharStatus = 'absent' | 'present' | 'correct'
 
+//a=absent p=present c=correct / first char = left, second char=right
+export type CharStatus = 'aa' | 'ap' | 'ac' | 'pa' | 'pp' | 'pc' | 'ca' | 'cp' | 'cc' | 'correct' | 'absent' | 'present'
+
+//KEYBOARD
 export const getStatuses = (
   guesses: string[]
 ): { [key: string]: CharStatus } => {
@@ -9,28 +13,57 @@ export const getStatuses = (
 
   guesses.forEach((word) => {
     word.split('').forEach((letter, i) => {
-      if (!solution.includes(letter)) {
-        // make status absent
-        return (charObj[letter] = 'absent')
+
+      // left side absent
+
+      if (!solution1.includes(letter) && !solution2.includes(letter)) {
+        return (charObj[letter] = 'aa')
+      }
+      if (!solution1.includes(letter) && letter === solution2[i]) {
+        return (charObj[letter] = 'ac')
+      }
+      if (!solution1.includes(letter)) {
+        return (charObj[letter] = 'ap')
       }
 
-      if (letter === solution[i]) {
-        //make status correct
-        return (charObj[letter] = 'correct')
+      //left side correct
+      if (letter === solution1[i] && !solution2.includes(letter)) {
+        return (charObj[letter] = 'ca')
+      }
+      if (letter === solution1[i] && letter === solution2[i]) {
+        return (charObj[letter] = 'cc')
+      }
+      if (letter === solution1[i]) {
+        return (charObj[letter] = 'cp')
       }
 
-      if (charObj[letter] !== 'correct') {
-        //make status present
-        return (charObj[letter] = 'present')
+      //left side present
+      if (!solution2.includes(letter)) {
+        return (charObj[letter] = 'pa')
+      }
+      if (letter === solution2[i]){
+        return (charObj[letter] = 'pc')
+      }
+      if (charObj[letter] !== 'pc'){
+        return (charObj[letter] = 'pp')
       }
     })
   })
-
   return charObj
 }
 
-export const getGuessStatuses = (guess: string): CharStatus[] => {
-  const splitSolution = solution.split('')
+//ROWS
+export const getGuessStatuses = (guess: string, solution: number): CharStatus[] => {
+  
+  const splitSolution = (() => {
+    if (solution == 1) {
+      return solution1.split('');
+    } else {
+      return solution2.split('');
+    }
+  })();
+
+
   const splitGuess = guess.split('')
 
   const solutionCharsTaken = splitSolution.map((_) => false)

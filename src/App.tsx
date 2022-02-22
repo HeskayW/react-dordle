@@ -7,7 +7,6 @@ import { useState, useEffect } from 'react'
 import { Alert } from './components/alerts/Alert'
 import { Grid } from './components/grid/Grid'
 import { Keyboard } from './components/keyboard/Keyboard'
-import { AboutModal } from './components/modals/AboutModal'
 import { InfoModal } from './components/modals/InfoModal'
 import { StatsModal } from './components/modals/StatsModal'
 import { SettingsModal } from './components/modals/SettingsModal'
@@ -15,10 +14,9 @@ import {
   GAME_TITLE,
   WIN_MESSAGES,
   GAME_COPIED_MESSAGE,
-  ABOUT_GAME_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   WORD_NOT_FOUND_MESSAGE,
-  CORRECT_WORD_MESSAGE,
+  CORRECT_WORD_MESSAGES,
 } from './constants/strings'
 import {
   MAX_WORD_LENGTH,
@@ -29,8 +27,10 @@ import {
 } from './constants/settings'
 import {
   isWordInWordList,
-  isWinningWord,
-  solution,
+  isWinningWordLeft,
+  isWinningWordRight,
+  solution1,
+  solution2,
   findFirstUnusedReveal,
 } from './lib/words'
 import { addStatsForCompletedGame, loadStats } from './lib/stats'
@@ -50,8 +50,12 @@ function App() {
 
   const [currentGuess, setCurrentGuess] = useState('')
   const [isGameWon, setIsGameWon] = useState(false)
+
+  const [isLeftWon, setIsLeftWon] = useState(false)
+  const [isRightWon, setIsRightWon] = useState(false)
+  const [isLimitReached, setIsLimitReached] = useState(false)
+
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
-  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false)
   const [isNotEnoughLetters, setIsNotEnoughLetters] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
@@ -71,20 +75,46 @@ function App() {
   )
   const [successAlert, setSuccessAlert] = useState('')
   const [isRevealing, setIsRevealing] = useState(false)
+  //-------------------------------------------------------------------
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
-    if (loaded?.solution !== solution) {
+    if (loaded?.solution1 !== solution1) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
-    if (gameWasWon) {
+    const leftWasWon = loaded.guesses.includes(solution1)
+    const rightWasWon = loaded.guesses.includes(solution2)
+    if (leftWasWon){
+      setIsLeftWon(true)
+    }
+    if (rightWasWon){
+      setIsRightWon(true)
+    }
+    if (leftWasWon && rightWasWon) {
       setIsGameWon(true)
     }
-    if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
+    if (loaded.guesses.length === MAX_CHALLENGES && (!leftWasWon || !rightWasWon)) {
       setIsGameLost(true)
     }
     return loaded.guesses
   })
+  //-------------------------------------------------------------------
+  const [printOnLeft, setPrintOnLeft] = useState<boolean[]>(() => {
+    const loaded = loadGameStateFromLocalStorage()
+    if (loaded?.solution1 !== solution1) {
+      return [true]
+    }
+    return loaded.printOnLeft
+    })
+
+  const [printOnRight, setPrintOnRight] = useState<boolean[]>(() => {
+    const loaded = loadGameStateFromLocalStorage()
+    if (loaded?.solution1 !== solution1) {
+      return [true]
+    }
+    return loaded.printOnRight
+  })
+
+  //-------------------------------------------------------------------
 
   const [stats, setStats] = useState(() => loadStats())
 
@@ -118,7 +148,7 @@ function App() {
   }
 
   const handleHardMode = (isHard: boolean) => {
-    if (guesses.length === 0) {
+    if (guesses.length === 0 || localStorage.getItem('gameMode') === 'hard') {
       setIsHardMode(isHard)
       localStorage.setItem('gameMode', isHard ? 'hard' : 'normal')
     } else {
@@ -135,9 +165,23 @@ function App() {
   }
 
   useEffect(() => {
-    saveGameStateToLocalStorage({ guesses, solution })
-  }, [guesses])
+    saveGameStateToLocalStorage({ guesses, solution1: solution1 , solution2: solution2 , printOnLeft: printOnLeft, printOnRight: printOnRight})
+  }, [guesses,printOnLeft,printOnRight])
 
+  useEffect(() => {
+    if(isLeftWon && isRightWon){
+      setStats(addStatsForCompletedGame(stats, guesses.length - 1))
+      setIsGameWon(true)      
+    }
+  }, [isLeftWon, isRightWon]);
+
+  useEffect(() => {
+    if(isLimitReached && !isGameWon){      
+      setStats(addStatsForCompletedGame(stats, guesses.length))
+      setIsGameLost(true)      
+    }
+  }, [isLimitReached]);
+  
   useEffect(() => {
     if (isGameWon) {
       setTimeout(() => {
@@ -215,7 +259,8 @@ function App() {
       setIsRevealing(false)
     }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
 
-    const winningWord = isWinningWord(currentGuess)
+
+
 
     if (
       currentGuess.length === MAX_WORD_LENGTH &&
@@ -225,14 +270,30 @@ function App() {
       setGuesses([...guesses, currentGuess])
       setCurrentGuess('')
 
-      if (winningWord) {
-        setStats(addStatsForCompletedGame(stats, guesses.length))
-        return setIsGameWon(true)
+      //------------------------------------------------------------   
+
+      if (!isLeftWon && isWinningWordLeft(currentGuess)){
+        setIsLeftWon(true)
+        setPrintOnLeft([...printOnLeft,false])
+      } else if (isLeftWon){
+        setPrintOnLeft([...printOnLeft,false])
+      } else {
+        setPrintOnLeft([...printOnLeft,true])
       }
 
-      if (guesses.length === MAX_CHALLENGES - 1) {
-        setStats(addStatsForCompletedGame(stats, guesses.length + 1))
-        setIsGameLost(true)
+      if (!isRightWon && isWinningWordRight(currentGuess)){
+        setIsRightWon(true)
+        setPrintOnRight([...printOnRight,false])
+      }else if (isRightWon){
+        setPrintOnRight([...printOnRight,false])
+      }else{
+        setPrintOnRight([...printOnRight,true])
+      }
+
+
+      if (guesses.length === MAX_CHALLENGES - 1 && !isGameWon) {
+        setIsLimitReached(true)
+
       }
     }
   }
@@ -261,6 +322,8 @@ function App() {
         currentGuess={currentGuess}
         isRevealing={isRevealing}
         currentRowClassName={currentRowClass}
+        printOnLeft={printOnLeft}
+        printOnRight={printOnRight}
       />
       <Keyboard
         onChar={onChar}
@@ -286,10 +349,6 @@ function App() {
         }}
         isHardMode={isHardMode}
       />
-      <AboutModal
-        isOpen={isAboutModalOpen}
-        handleClose={() => setIsAboutModalOpen(false)}
-      />
       <SettingsModal
         isOpen={isSettingsModalOpen}
         handleClose={() => setIsSettingsModalOpen(false)}
@@ -302,14 +361,6 @@ function App() {
         handleHighContrastMode={handleHighContrastMode}
       />
 
-      <button
-        type="button"
-        className="mx-auto mt-8 flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 select-none"
-        onClick={() => setIsAboutModalOpen(true)}
-      >
-        {ABOUT_GAME_MESSAGE}
-      </button>
-
       <Alert message={NOT_ENOUGH_LETTERS_MESSAGE} isOpen={isNotEnoughLetters} />
       <Alert
         message={WORD_NOT_FOUND_MESSAGE}
@@ -317,7 +368,7 @@ function App() {
       />
       <Alert message={missingLetterMessage} isOpen={isMissingPreviousLetters} />
       <Alert
-        message={CORRECT_WORD_MESSAGE(solution)}
+        message={CORRECT_WORD_MESSAGES(solution1,solution2)}
         isOpen={isGameLost && !isRevealing}
       />
       <Alert
