@@ -49,10 +49,22 @@ export const Key = ({
       'border-l-yellow-500 hover:border-l-yellow-600 active:border-l-yellow-700 border-r-green-500 hover:border-r-green-600 active:border-r-green-700 text-white':
         status === 'pc' && !isHighContrast,
         
-      //  'bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white':
-      //  status === 'correct' && isHighContrast,
-      //  'bg-cyan-500 hover:bg-cyan-600 active:bg-cyan-700 text-white':
-      //  status === 'present' && isHighContrast,
+      'bg-slate-400 dark:bg-slate-800 border-r-orange-500 hover:border-r-orange-600 active:border-r-orange-700 text-white':
+        status === 'ac' && isHighContrast,
+      'bg-slate-400 dark:bg-slate-800 border-r-cyan-500 hover:border-r-cyan-600 active:border-r-cyan-700 text-white':
+        status === 'ap' && isHighContrast,
+      'border-l-orange-500 hover:border-l-orange-600 active:border-l-orange-700 bg-slate-400 dark:bg-slate-800 text-white':
+        status === 'ca' && isHighContrast,
+      'border-l-orange-500 hover:border-l-orange-600 active:border-l-orange-700 border-r-cyan-500 hover:border-r-cyan-600 active:border-r-cyan-700 text-white':
+        status === 'cp' && isHighContrast,
+      'border-l-orange-500 hover:border-l-orange-600 active:border-l-orange-700 border-r-orange-500 hover:border-r-orange-600 active:border-r-orange-700 text-white':
+        status === 'cc' && isHighContrast,
+      'border-l-cyan-500 hover:border-l-cyan-600 active:border-l-cyan-700 bg-slate-400 dark:bg-slate-800 text-white':
+        status === 'pa' && isHighContrast,
+      'border-l-cyan-500 hover:border-l-cyan-600 active:border-l-cyan-700 border-r-cyan-500 hover:border-r-cyan-600 active:border-r-cyan-700 text-white':
+        status === 'pp' && isHighContrast,
+      'border-l-cyan-500 hover:border-l-cyan-600 active:border-l-cyan-700 border-r-orange-500 hover:border-r-orange-600 active:border-r-orange-700 text-white':
+        status === 'pc' && isHighContrast,
     }
   )
 

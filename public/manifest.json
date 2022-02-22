@@ -1,6 +1,6 @@
 {
-  "short_name": "Game",
-  "name": "Game",
+  "short_name": "React Dordle",
+  "name": "React Dordle",
   "icons": [
     {
       "src": "favicon.ico",

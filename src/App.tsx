@@ -16,7 +16,7 @@ import {
   GAME_COPIED_MESSAGE,
   NOT_ENOUGH_LETTERS_MESSAGE,
   WORD_NOT_FOUND_MESSAGE,
-  CORRECT_WORD_MESSAGE,
+  CORRECT_WORD_MESSAGES,
 } from './constants/strings'
 import {
   MAX_WORD_LENGTH,
@@ -75,7 +75,7 @@ function App() {
   )
   const [successAlert, setSuccessAlert] = useState('')
   const [isRevealing, setIsRevealing] = useState(false)
-  //------------------------------------------------------------------- LOADING GUESSES
+  //-------------------------------------------------------------------
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution1 !== solution1) {
@@ -97,7 +97,7 @@ function App() {
     }
     return loaded.guesses
   })
-  //-------------------------------------------------------------------LOADING PRINT ARRAYS
+  //-------------------------------------------------------------------
   const [printOnLeft, setPrintOnLeft] = useState<boolean[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution1 !== solution1) {
@@ -170,14 +170,14 @@ function App() {
 
   useEffect(() => {
     if(isLeftWon && isRightWon){
-      setStats(addStatsForCompletedGame(stats, guesses.length))
+      setStats(addStatsForCompletedGame(stats, guesses.length - 1))
       setIsGameWon(true)      
     }
   }, [isLeftWon, isRightWon]);
 
   useEffect(() => {
     if(isLimitReached && !isGameWon){      
-      setStats(addStatsForCompletedGame(stats, guesses.length + 1))
+      setStats(addStatsForCompletedGame(stats, guesses.length))
       setIsGameLost(true)      
     }
   }, [isLimitReached]);
@@ -289,12 +289,7 @@ function App() {
       }else{
         setPrintOnRight([...printOnRight,true])
       }
-      //------------------------------------------------------------
 
-      // if (isLeftWon && isRightWon) {
-      //   setStats(addStatsForCompletedGame(stats, guesses.length))
-      //   return setIsGameWon(true)
-      // }
 
       if (guesses.length === MAX_CHALLENGES - 1 && !isGameWon) {
         setIsLimitReached(true)
@@ -373,7 +368,7 @@ function App() {
       />
       <Alert message={missingLetterMessage} isOpen={isMissingPreviousLetters} />
       <Alert
-        message={CORRECT_WORD_MESSAGE(solution1)}
+        message={CORRECT_WORD_MESSAGES(solution1,solution2)}
         isOpen={isGameLost && !isRevealing}
       />
       <Alert
