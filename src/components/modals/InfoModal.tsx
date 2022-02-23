@@ -11,71 +11,75 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
     <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
     
-      Guess two 5-letter words in 7 tries. After each guess, the color of the tiles will
-      change to show how close your guess was to each word. The five tiles on the left correspond to the first word,
-      while the five on the right correspond to the second word. You have to guess both in order to win.
+      Adivina dos palabras de 5 letras en 7 intentos.<br/><br/>
+      Después de cada intento, el color de las letras 
+      cambia para mostrar qué tan cerca estás de acertar cada palabra.<br/><br/>
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
-        <Cell value="W" status="correct" />
-        <Cell value="E" />
+        <Cell value="G" status="correct" />
         <Cell value="A" />
-        <Cell value="R" />
-        <Cell value="Y" />
-      </div>
-      <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter W is in the word and in the correct spot.
-      </p>
-
-      <div className="flex justify-center mb-1 mt-4">
-        <Cell value="P" />
-        <Cell value="I" />
-        <Cell value="L" status="present" />
-        <Cell value="O" />
         <Cell value="T" />
+        <Cell value="O" />
+        <Cell value="S" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter L is in the word but in the wrong spot.
+        La letra G está en la palabra y en la posición correcta.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">
         <Cell value="V" />
+        <Cell value="O" />
+        <Cell value="C" status="present" />
         <Cell value="A" />
-        <Cell value="G" />
-        <Cell value="U" status="absent" />
-        <Cell value="E" />
+        <Cell value="L" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter U is not in the word in any spot.
+        La letra C está en la palabra pero en la posición incorrecta.
+      </p>
+
+      <div className="flex justify-center mb-1 mt-4">
+        <Cell value="C" />
+        <Cell value="A" />
+        <Cell value="N" />
+        <Cell value="T" status="absent" />
+        <Cell value="O" />
+      </div>
+      <p className="text-sm text-gray-500 dark:text-gray-300">
+        la letra T no está en la palabra.<br/><br/>
+      Las 5 letras de la izquierda corresponden a la primera palabra, 
+      mientras que las 5 de la derecha corresponden a la segunda palabra.<br/><br/>
+      Tienes que adivinar ambas para ganar.<br/><br/>
+      Una palabra puede tener letras repetidas.
       </p>
 
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
-        This is a clone of {' '}
+        Este juego es un clon de {' '}
         <a
           href="https://zaratustra.itch.io/dordle"
           className="underline font-bold"
         >
           Dordle
-        </a>{' '} by {' '}
+        </a>{' '} por {' '}
         <a
           href="https://zaratustra.itch.io/"
           className="underline font-bold"
         >
-          Guilherme S. Töws. 
+          Guilherme S. Töws.<br/><br/> 
         </a>{' '}  
-        Built as a fork of an open source version of the popular word guessing game - {' '}
+        Construido a partir de una versión open source del popular juego de palabras - {' '}
         <a
-          href="https://github.com/HeskayW/react-wordle-V"
+          href="https://github.com/HeskayW/react-dordle"
           className="underline font-bold"
         >
-          check out the fork here
+          revisa este proyecto aquí
         </a>{' '}
-        and {' '}
+        y {' '}
         <a
           href="https://github.com/cwackerfuss/react-wordle"
           className="underline font-bold"
         >
-          check out the original code here
+          revisa el código original aquí
         </a>{' '}
       </p>
     </BaseModal>
