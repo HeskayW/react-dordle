@@ -42,7 +42,6 @@ import {
 } from './lib/localStorage'
 
 import './App.css'
-import { stat } from 'fs'
 
 function App() {
   const prefersDarkMode = window.matchMedia(
@@ -174,14 +173,14 @@ function App() {
       setStats(addStatsForCompletedGame(stats, guesses.length - 1))
       setIsGameWon(true)      
     }
-  }, [isLeftWon, isRightWon, guesses, stats]);
+  }, [isLeftWon, isRightWon]);
 
   useEffect(() => {
     if(isLimitReached && !isGameWon){      
       setStats(addStatsForCompletedGame(stats, guesses.length))
       setIsGameLost(true)      
     }
-  }, [isLimitReached, guesses, isGameWon, stats]);
+  }, [isLimitReached]);
   
   useEffect(() => {
     if (isGameWon) {
