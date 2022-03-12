@@ -42,7 +42,7 @@ import {
 } from './lib/localStorage'
 
 import './App.css'
-import { stat } from 'fs'
+
 
 function App() {
   const prefersDarkMode = window.matchMedia(

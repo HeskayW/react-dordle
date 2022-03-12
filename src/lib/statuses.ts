@@ -56,7 +56,7 @@ export const getStatuses = (
 export const getGuessStatuses = (guess: string, solution: number): CharStatus[] => {
   
   const splitSolution = (() => {
-    if (solution == 1) {
+    if (solution === 1) {
       return solution1.split('');
     } else {
       return solution2.split('');
