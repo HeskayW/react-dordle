@@ -15,7 +15,7 @@ export const shareStatus = (
   navigator.clipboard.writeText(
     `${GAME_TITLE} #${solutionIndex1} ${lost ? 'X' : guesses.length}/${MAX_CHALLENGES}${
       isHardMode ? '*' : ''
-    }\n\n` + generateEmojiGrid(guesses)
+    }\n\n` + generateEmojiGrid(guesses) + '\n\nhttps://heskayw.github.io/react-dordle/'
   )
 }
 
