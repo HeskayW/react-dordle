@@ -16,7 +16,7 @@ type Props = {
 export const Key = ({
   children,
   status,
-  width = 40,
+  width = 30,
   value,
   onClick,
   isRevealing,
@@ -25,7 +25,7 @@ export const Key = ({
   const isHighContrast = getStoredIsHighContrastMode()
 
   const classes = classnames(
-    'flex items-center justify-center rounded mx-0.5 text-lg font-bold cursor-pointer select-none dark:text-white border-transparent',
+    'flex items-center justify-center rounded mx-0.5 text-m font-bold cursor-pointer select-none dark:text-white border-transparent',
     {
       'transition ease-in-out': isRevealing,
       'bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 active:bg-slate-400':

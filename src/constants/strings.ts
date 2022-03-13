@@ -12,8 +12,8 @@ export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Must use ${guess} in position ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
   `Guess must contain ${letter}`
-export const ENTER_TEXT = 'Enviar'
-export const DELETE_TEXT = 'Borrar'
+export const ENTER_TEXT = 'ENVIAR'
+export const DELETE_TEXT = '🠔'
 export const STATISTICS_TITLE = 'Estadísticas'
 export const GUESS_DISTRIBUTION_TEXT = 'Distribución'
 export const NEW_WORD_TEXT = 'Nuevo puzzle en'
