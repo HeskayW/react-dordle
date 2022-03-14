@@ -8,7 +8,7 @@ type Props = {
 
 export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
-    <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal title="Cómo jugar" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
     
       Adivina dos palabras de 5 letras en 7 intentos.<br/><br/>
@@ -46,15 +46,34 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="O" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        la letra T no está en la palabra.<br/><br/>
+        La letra T no está en la palabra.<br/><br/>
+
+        <div className="flex justify-center mb-1 mt-4">
+        <Cell value="J" />
+        <Cell value="U" />
+        <Cell value="E" status="present" />
+        <Cell value="G" />
+        <Cell value="O" />
+        &nbsp;
+        <Cell value="J" />
+        <Cell value="U"  status="correct" />
+        <Cell value="E" />
+        <Cell value="G" />
+        <Cell value="O"  status="present"/>
+      </div>
+      <p className="text-sm text-gray-500 dark:text-gray-300">
       Las 5 letras de la izquierda corresponden a la primera palabra, 
       mientras que las 5 de la derecha corresponden a la segunda palabra.<br/><br/>
       Tienes que adivinar ambas para ganar.<br/><br/>
-      Una palabra puede tener letras repetidas.
+      Una palabra puede tener letras repetidas.<br/><br/>
+      Los tildes no se toman en cuenta.
+      </p>
+
+
       </p>
 
       <p className="mt-6 italic text-sm text-gray-500 dark:text-gray-300">
-        Este juego es un clon de {' '}
+        Este juego es una adaptación de {' '}
         <a
           href="https://zaratustra.itch.io/dordle"
           className="underline font-bold"
@@ -67,7 +86,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         >
           Guilherme S. Töws.<br/><br/> 
         </a>{' '}  
-        Construido a partir de una versión open source del popular juego de palabras - {' '}
+        Construido a partir de una versión open source de Wordle - {' '}
         <a
           href="https://github.com/HeskayW/react-dordle"
           className="underline font-bold"
