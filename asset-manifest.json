@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/react-dordle/static/css/main.67a0c4ca.css",
-    "main.js": "/react-dordle/static/js/main.f8b5c67b.js",
+    "main.css": "/react-dordle/static/css/main.0539d83d.css",
+    "main.js": "/react-dordle/static/js/main.c27b2f97.js",
     "static/js/787.b3f9d252.chunk.js": "/react-dordle/static/js/787.b3f9d252.chunk.js",
     "index.html": "/react-dordle/index.html",
-    "main.67a0c4ca.css.map": "/react-dordle/static/css/main.67a0c4ca.css.map",
-    "main.f8b5c67b.js.map": "/react-dordle/static/js/main.f8b5c67b.js.map",
+    "main.0539d83d.css.map": "/react-dordle/static/css/main.0539d83d.css.map",
+    "main.c27b2f97.js.map": "/react-dordle/static/js/main.c27b2f97.js.map",
     "787.b3f9d252.chunk.js.map": "/react-dordle/static/js/787.b3f9d252.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.67a0c4ca.css",
-    "static/js/main.f8b5c67b.js"
+    "static/css/main.0539d83d.css",
+    "static/js/main.c27b2f97.js"
   ]
 }
