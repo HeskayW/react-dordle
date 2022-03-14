@@ -83,15 +83,17 @@ function App() {
     }
     const leftWasWon = loaded.guesses.includes(solution1)
     const rightWasWon = loaded.guesses.includes(solution2)
-    if (leftWasWon){
-      setIsLeftWon(true)
-    }
-    if (rightWasWon){
-      setIsRightWon(true)
-    }
+
     if (leftWasWon && rightWasWon) {
       setIsGameWon(true)
     }
+    else if (leftWasWon){
+      setIsLeftWon(true)
+    }
+    else if (rightWasWon){
+      setIsRightWon(true)
+    }
+   
     if (loaded.guesses.length === MAX_CHALLENGES && (!leftWasWon || !rightWasWon)) {
       setIsGameLost(true)
     }
