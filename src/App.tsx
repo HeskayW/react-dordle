@@ -133,8 +133,10 @@ function App() {
   useEffect(() => {
     // if no game state on load,
     // show the user the how-to info modal
+    // and set dark mode
     if (!loadGameStateFromLocalStorage()) {
       setIsInfoModalOpen(true)
+      handleDarkMode(true)
     }
   }, [])
   
@@ -181,17 +183,20 @@ function App() {
   useEffect(() => {
     if(isLeftWon && isRightWon){
       setStats(addStatsForCompletedGame(stats, guesses.length - 1))
-      setIsGameWon(true)      
+      setIsGameWon(true)
+      console.log("gameiswon")
+      return   
     }
-  }, [isLeftWon, isRightWon]);
 
-  useEffect(() => {
     if(isLimitReached && !isGameWon){      
       setStats(addStatsForCompletedGame(stats, guesses.length))
       setIsGameLost(true)      
+      console.log("gameislost")      
     }
-  }, [isLimitReached]);
-  
+
+  }, [isLeftWon, isRightWon, isLimitReached]);
+
+
   useEffect(() => {
     if (isGameWon) {
       setTimeout(() => {
