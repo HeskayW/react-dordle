@@ -9,6 +9,7 @@ type Props = {
   value: string
   width?: number
   status?: CharStatus
+  border?: boolean
   onClick: (value: string) => void
   isRevealing?: boolean
 }
@@ -18,6 +19,7 @@ export const Key = ({
   status,
   width = 30,
   value,
+  border = true,
   onClick,
   isRevealing,
 }: Props) => {
@@ -76,9 +78,24 @@ export const Key = ({
     borderRightWidth: `${width*0.5}px`,
   }
 
+  const stylesNoBorder = {
+    transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
+    width: `${width}px`,
+    height: '58px',
+  }
+
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     onClick(value)
     event.currentTarget.blur()
+  }
+
+  if (!border)
+  {
+    return (
+      <button style={stylesNoBorder} className={classes} onClick={handleClick}>
+        {children || value}
+      </button>
+    )
   }
 
   return (

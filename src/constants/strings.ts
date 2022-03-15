@@ -13,7 +13,7 @@ export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
   `Guess must contain ${letter}`
 export const ENTER_TEXT = 'ENVIAR'
-export const DELETE_TEXT = '🠔'
+export const DELETE_TEXT = 'BORRAR'
 export const STATISTICS_TITLE = 'Estadísticas'
 export const GUESS_DISTRIBUTION_TEXT = 'Distribución'
 export const NEW_WORD_TEXT = 'Nuevo puzzle en'

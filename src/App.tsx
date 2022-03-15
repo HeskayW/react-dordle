@@ -129,7 +129,15 @@ function App() {
   const [isMissingPreviousLetters, setIsMissingPreviousLetters] =
     useState(false)
   const [missingLetterMessage, setIsMissingLetterMessage] = useState('')
-
+  
+  useEffect(() => {
+    // if no game state on load,
+    // show the user the how-to info modal
+    if (!loadGameStateFromLocalStorage()) {
+      setIsInfoModalOpen(true)
+    }
+  }, [])
+  
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
