@@ -1,5 +1,11 @@
 # React Dordle
 
+Hola, esta es una adaptación al Español del juego Dordle de Guilherme S. Töws - (https://zaratustra.itch.io/dordle) 
+
+[**Puedes jugarlo acá**](https://heskayw.github.io/react-dordle/)
+
+//-----------------------------------------------------------------------//
+
 This is a fork of cwackerfuss/react-wordle adapted as a clone of Dordle by Guilherme S. Töws - (https://zaratustra.itch.io/dordle) 
 Intented to be a Spanish Dordle
 
