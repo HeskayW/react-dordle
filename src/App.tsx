@@ -181,7 +181,7 @@ function App() {
   }, [guesses,printOnLeft,printOnRight])
 
   useEffect(() => {
-    if(isLeftWon && isRightWon){
+    if(isLeftWon && isRightWon && !isGameWon){
       setStats(addStatsForCompletedGame(stats, guesses.length - 1))
       setIsGameWon(true)
       console.log("gameiswon")
