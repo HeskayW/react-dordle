@@ -11,10 +11,10 @@ export const Histogram = ({ gameStats }: Props) => {
 
   return (
     <div className="columns-1 justify-left m-2 text-sm dark:text-white">
-      {winDistribution.map((value, i) => (
+      {winDistribution.slice(1).map((value, i) => (
         <Progress
           key={i}
-          index={i}
+          index={i+1}
           size={90 * (value / maxValue)}
           label={String(value)}
         />
